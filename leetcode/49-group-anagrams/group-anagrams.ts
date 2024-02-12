@@ -13,25 +13,29 @@
 */
 
 function groupAnagrams(strs: string[]): string[][] {
-    let groupedAnagrams:string[][];
+    let groupedAnagrams:string[][] = [];
 
     for (let i = 0; i < strs.length; i++) { // iterate over strings
-        const iterationString:string = strs[i];
-        let charMap = new Map<string, number>();
+        if (i === 0) { groupedAnagrams[0].push(strs[0]); }
+        else {
+            const newString:string = strs[i];
+            const oldString:string = strs[i - 1];
 
-        for (let j = 0; j < iterationString.length; j++) { // iterate over characters
-            const iterationChar = iterationString[j];
+            let newArr:string[] = newString.split("");
+            let oldArr:string[] = oldString.split("");
 
-            if (charMap.has(iterationChar)) { // if current char is already in hashmap increase value by 1
-                let charCount; // <-- this is ugly but avoids undefined error
-                charCount = charMap.get(iterationChar);
-                charMap.set(iterationChar, charCount + 1);
-            }
-            else {
-                charMap.set(iterationChar, 1);
+            newArr = newArr.sort();
+            oldArr = oldArr.sort();
+
+            if (newArr === oldArr) {
+
             }
         }
     }
 
     return groupedAnagrams;
 };
+
+const test:string[] = ["eat","tea","tan","ate","nat","bat"];
+
+console.log(groupAnagrams(test));
