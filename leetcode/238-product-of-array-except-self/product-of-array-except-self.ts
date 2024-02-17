@@ -1,15 +1,16 @@
 function productExceptSelf(nums: number[]): number[] {
-    let numbers:number[] = [];
+    const len:number = nums.length;
+    const lastIndex:number = len - 1;
+    const numbers:number[] = new Array(len).fill(1);
 
-    for (let i = 0; i < nums.length; i++) {
-        let innerLoopProduct:number = 1;
-        
-        for (let j = 0; j < nums.length; j++) {
-            if (j === i) { continue; }
-            else if (j !== i) { innerLoopProduct *= nums[j]; }
-        }
+    let leftToRight:number = 1;
+    let rightToLeft:number = 1;
 
-        numbers.push(innerLoopProduct);
+    for (let i = 0; i < len; i++) {
+        numbers[i] *= leftToRight;
+        numbers[lastIndex - i] *= rightToLeft;
+        leftToRight *= nums[i];
+        rightToLeft *= nums[lastIndex - i];
     }
     
     return numbers;
