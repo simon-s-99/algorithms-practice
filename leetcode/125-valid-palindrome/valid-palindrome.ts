@@ -6,14 +6,13 @@
 */
 
 function isPalindrome(s: string): boolean {
-    let input:string = s;
-    input = input.replace(/[^a-zA-Z]/, "");
-
+    s = s.toLowerCase().replace(/[^a-z0-9]/g, "");
+    
     let backwardInput = "";
-    for (let i = input.length - 1; i >= 0; i--) {
-        backwardInput += input[i];
+    for (let i = s.length - 1; i >= 0; i--) {
+        backwardInput += s[i];
     }
-
-    if (input === backwardInput) { return true; }
+    
+    if (s === backwardInput) { return true; }
     else { return false; }
 };
