@@ -6,7 +6,7 @@
 */
 
 function threeSum(nums: number[]): number[][] {
-    let result: number[][] = [];
+    const result: number[][] = [];
 
     // bubble sort 
     let swapped: boolean = true;
@@ -22,19 +22,25 @@ function threeSum(nums: number[]): number[][] {
         }
     }
 
-    let j: number = 1;
-    let k: number = nums.length;
-    for (let i = 0; i < nums.length;) {
-        if (j === k) {
-            i++;
-            j = i + 1;
-            k = nums.length;
-        }
+    for (let i = 0; i < nums.length - 2; i++) {
+        if (i > 0 && nums[i] === nums[i - 1]) { continue; }
+        
+        let j: number = i + 1;
+        let k: number = nums.length - 1;
 
-        const sum: number = nums[i] + nums[j] + nums[k];
-        if (sum < 0) { j++; }
-        else if (sum > 0) { k--; }
-        else { result.push([nums[i], nums[j], nums[k]]); }
+        while (j < k) {
+            const sum: number = nums[i] + nums[j] + nums[k];
+
+            if (sum < 0) { j++; }
+            else if (sum > 0) { k--; }
+            else { 
+                result.push([nums[i], nums[j], nums[k]]); 
+                j++;
+                while (nums[j] === nums[j - 1] && j < k) { j++; }
+                k--;
+                while (nums[k] === nums[k + 1] && j < k) { k--; }
+            }
+        }
     }
 
     return result;
