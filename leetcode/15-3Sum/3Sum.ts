@@ -5,34 +5,37 @@
     Notice that the solution set must not contain duplicate triplets.
 */
 
-
-// THIS SOLUTION IS WRONG AND MEGASCUFFED, WILL FIX
 function threeSum(nums: number[]): number[][] {
     let result: number[][] = [];
-    
-    for (let i = 1; i < nums.length - 1; i++) {
-        let k: number = nums.length - 1;
-        for (let j = 0; j < k; j++) {
-            if (k === i) { k = k - 1; }
-            if (k === j) { break; }
-            if (nums[i] + nums[j] + nums[k] === 0) {
-                result.push([nums[i], nums[j], nums[k]]);
+
+    // bubble sort 
+    let swapped: boolean = true;
+    while (swapped) {
+        swapped = false;
+        for (let i = 1; i < nums.length; i++) {
+            if (nums[i - 1] > nums[i]) {
+                const tmp: number = nums[i];
+                nums[i] = nums[i - 1];
+                nums[i - 1] = tmp;
+                swapped = true;
             }
         }
     }
-    
+
+    let j: number = 1;
+    let k: number = nums.length;
+    for (let i = 0; i < nums.length;) {
+        if (j === k) {
+            i++;
+            j = i + 1;
+            k = nums.length;
+        }
+
+        const sum: number = nums[i] + nums[j] + nums[k];
+        if (sum < 0) { j++; }
+        else if (sum > 0) { k--; }
+        else { result.push([nums[i], nums[j], nums[k]]); }
+    }
+
     return result;
 };
-
-// if (j === k || k < j) { break; }
-// if (i === nums.length - 1) {
-//     j = j + 1;
-//     k = k - 1;
-//     i = 0;
-// }
-// if (i === j || i === k) { continue; }
-// if (nums[i] + nums[j] + nums[k] === 0) {
-//     if (!result.includes([nums[i], nums[j], nums[k]])) {
-//         result.push([nums[i], nums[j], nums[k]]);
-//     }
-// }
